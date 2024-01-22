@@ -4,17 +4,32 @@ df <- starwars
 
 # Grouping ----------------------------------------------------------------
 
+df %>% 
+  group_by(species) %>% 
+  summarize(species_count = n())
 
 # top 5 tallest overall - using slice_head
 df %>% 
   arrange(desc(height)) %>% 
   slice_head(n = 5)
 
+df %>% 
+  arrange(mass) %>% 
+  slice_head(n = 2)
+
+df %>% 
+  slice_min(mass, n = 2)
+
+df %>% 
+  slice_sample(prop = 0.1)
 
 
 # or just using slice_max
 df %>% 
   slice_max(mass, n = 5)
+
+df %>% 
+  slice_max(skin_color, n = 1, with_ties = F)
 
 # what is the shortest character for each species? 
 df %>% 
@@ -30,6 +45,14 @@ df %>%
 # comparison of height for each species? I.e., are you tall for a human?
 # calculate tallest for each species without summarizing, 
 # compare to species max, show a few of the columns, sort
+df %>% 
+  select(name, species, height) %>%
+  group_by(species) %>% 
+  mutate(species_count = n(),
+         species_avg = mean(height, na.rm = T)) %>% 
+  mutate(relative_height = height - species_avg)
+
+
 df %>% 
   select(name, species, height) %>%
   group_by(species) %>% 
@@ -50,10 +73,16 @@ df %>%
   summarize(count = n(),
             avg_birth_year = mean(birth_year, na.rm = T))
 
+df %>% 
+  group_by(species) %>% 
+  slice_min(mass, n = 1, with_ties = F) %>% 
+  group_by(sex) %>% 
+  summarize(avg_height = mean(height, na.rm = T))
+
 
 # Joins -------------------------------------------------------------------
 
-# install.packages('nycflights13')
+install.packages('nycflights13')
 library(nycflights13)
 df_flights <- flights
 df_airlines <- airlines
