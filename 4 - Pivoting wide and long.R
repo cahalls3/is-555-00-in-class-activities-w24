@@ -163,6 +163,27 @@ ri %>%
 
 
 
+bnames %>% 
+  pivot_wider(
+    names_from = name,
+    values_from = n
+  )
+
+
+bnames %>% 
+  pivot_wider(
+    names_from = year,
+    values_from = n
+  ) 
+
+
+bnames %>% 
+  pivot_wider(
+    names_from = c('year', 'sex'),
+    values_from = n
+  )
+
+
 
 
 
