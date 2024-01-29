@@ -184,6 +184,12 @@ bnames %>%
   )
 
 
-
+bob %>% 
+  pivot_longer(
+    cols = !episode:title,
+    names_to = "attribute",
+    values_to = "is_present"
+  ) %>%
+  filter(is_present == 1)
 
 
