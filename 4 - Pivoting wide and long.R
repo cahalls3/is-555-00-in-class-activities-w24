@@ -184,12 +184,50 @@ bnames %>%
   )
 
 
-bob %>% 
+bob_long <- bob %>% 
   pivot_longer(
     cols = !episode:title,
     names_to = "attribute",
     values_to = "is_present"
   ) %>%
   filter(is_present == 1)
+
+bob_long %>%
+  count(attribute)
+
+
+# Which attributes occur most frequently?
+
+bob_long %>% 
+  group_by(attribute) %>% 
+  summarize(frequency = sum(is_present)) %>% 
+  arrange(desc(frequency)) %>% 
+  print(n=100)
+
+# Which season did Bob paint the most mountains?
+bob_long %>% 
+  group_by(season) %>% 
+  summarize(mtn_count = sum(str_detect(attribute, "mountain") & is_present == 1)) %>% 
+  arrange(desc(mtn_count))
+
+
+bob_long %>% 
+  filter(is_present ==1,
+         str_detect(attribute, "mountain")) %>% 
+  count(season, sort = T)
+
+# Create a table that displays one line per attribute with a count of times that
+# object was used in each season (one column per season)
+
+bob_long %>% 
+  select(attribute, season, is_present) %>%
+  group_by(season, attribute) %>% 
+  summarize(attribute_count = sum(is_present)) %>% 
+  pivot_wider(
+    names_from = season,
+    values_from = attribute_count
+  )
+
+
 
 
