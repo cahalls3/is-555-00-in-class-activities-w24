@@ -27,17 +27,31 @@ df %>%
   arrange(mass)
 
 
+df %>% 
+  filter(height > 100,
+         sex == 'female') %>% 
+  select(name, height, mass, species, films) %>% 
+  filter(mass > 50) %>% 
+  arrange(mass)
+
+
 # calculate a new column,weight_lbs = mass * 2.204623
 # Make sure it gets saved to the tibble...
 df <- df %>% 
+<<<<<<< Updated upstream:1a - data wrangling 1 - Section 1.R
   mutate(weight_lbs = mass * 2.204623)
   
+=======
+  mutate(weight_lbs = mass * 2.204623) %>% 
+  glimpse()
+>>>>>>> Stashed changes:data wrangling 1 - Section 1.R
 
 
 # group and summarize. Pay attention to NAs
 # get a count and mean mass by species
 df %>% glimpse
 
+<<<<<<< Updated upstream:1a - data wrangling 1 - Section 1.R
 
 df %>% 
   group_by(species) %>% 
@@ -46,9 +60,18 @@ df %>%
 
 df %>% 
   filter(species == 'Droid')
+=======
+df %>% 
+  group_by(species) %>% 
+  summarize(species_count = n(),
+            avt_mass = mean(mass, na.rm = TRUE))
+
+>>>>>>> Stashed changes:data wrangling 1 - Section 1.R
 
 
 # Lots of NAs for average... why? Even for large groups it's NA...
+df %>% 
+  filter(species == 'Droid')
 
 
 # Humans definitely have SOME mass data...
