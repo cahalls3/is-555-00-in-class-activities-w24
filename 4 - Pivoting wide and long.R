@@ -119,6 +119,8 @@ gap_wide <- gap %>%
     values_from = lifeExp:gdpPercap
   )
 
+
+
 gap_wide %>% 
   pivot_longer(
     cols = lifeExp_1952:gdpPercap_2007,
