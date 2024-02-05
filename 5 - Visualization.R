@@ -68,19 +68,20 @@ penguins %>%
 # histogram with body_mass_g
 # add species as fill color, pay attention to position
 
+penguins %>% 
+  ggplot(mapping = aes(x = body_mass_g, color = species, fill = species)) +
+  geom_histogram(binwidth = 500, alpha = .5, position = "dodge", fill = "blue")
 
 
 # density curves are sometimes nicer. Let's do the above but with 
 # a density curve. Alpha is nice here.
 
-
+penguins %>% 
+  ggplot(mapping = aes(x = body_mass_g, color = species, fill = species)) +
+  geom_density(alpha = .5, position = "dodge")
 
 # bar charts with categoricals: quick, easy counts summary
 # stacked vs. side-by-side
-
-
-
-
 
 
 # Second: two-variable plots (relationships)
@@ -88,6 +89,11 @@ penguins %>%
 
 # Violin plots are cool. Lets look at body mass across islands
 # Notice what happens when we add color now
+
+penguins %>% 
+  filter(!is.na(sex)) %>% 
+  ggplot(aes(x = island, y = body_mass_g, fill = species)) +
+  geom_violin()
 
 
 # Bar plots with both x and  y are a bit more flexible.
