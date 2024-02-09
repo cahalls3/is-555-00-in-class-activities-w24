@@ -36,4 +36,17 @@ econ <- read_csv('https://www.dropbox.com/s/8bq9rw0rk46hru2/econ.csv?dl=1')
 
 # Let's plot two measures over time: savings rate & unemployment weeks
 # It's easiest if we pivot to make this work
+library(lubridate)
+
+econ %>% 
+  select(date, savings_rate, unempl_weeks) %>% 
+  #filter(date < mdy('01-01-1975')) %>% 
+  pivot_longer(!date, 
+               names_to = 'Measure', 
+               values_to = 'Rate') %>% 
+  ggplot(aes(x = date, y = Rate, color = Measure)) +
+  geom_line() +
+  facet_wrap(~Measure, ncol = 1)
+
+
 
