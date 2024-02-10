@@ -49,4 +49,3 @@ econ %>%
   facet_wrap(~Measure, ncol = 1)
 
 
-
