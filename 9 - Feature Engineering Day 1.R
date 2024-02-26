@@ -3,7 +3,7 @@ library(tidyverse)
 df <- read_csv('https://www.dropbox.com/s/petmujrpxa3qn3p/titanic.csv?dl=1') %>% 
   janitor::clean_names()
 
-df %>% glimpse
+df %>% glimpse()
 
 # Data Dictionary:
 # 
@@ -26,6 +26,8 @@ df %>% glimpse
 
 # Get a feel for the missingness
 
+df %>% 
+  summarize(across(everything(), ~sum(is.na(.x))))
 
 
 # first check: is the missingness relevant?
@@ -34,6 +36,13 @@ df %>% glimpse
 
 # fill in missing age values, check our work
 
+df %>% 
+  group_by(is.na(cabin)) %>% 
+  summarize(across(everything(), ~mean(.x, na.rm = T)))
+
+df %>% 
+  group_by(is.na(age)) %>% 
+  summarize(across(everything(), ~mean(.x, na.rm = T)))
 
 # now handle embarked, this time using replace_na()
 # Again, check our work
