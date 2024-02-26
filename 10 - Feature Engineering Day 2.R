@@ -117,9 +117,14 @@ df %>%
 # (This is what caused the errors we saw in class...)
 df %>% count(fare)
 
+df %>% 
+  mutate(fare = (fare)^-(1/2)) %>% 
+  count(fare) %>% 
+  filter(is.infinite(fare))
+
+
 df <- df %>% 
   mutate(fare = (fare+1)^-(1/2))
-
 
 
 # Now we can scale the numeric columns using the old-school `scale()` function. Because it's an old function,
