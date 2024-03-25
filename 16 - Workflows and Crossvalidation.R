@@ -1,5 +1,5 @@
 library(tidymodels)
-# install.packages('ranger')
+install.packages('ranger')
 
 data(ames)
 housing <- ames %>% janitor::clean_names()
@@ -24,7 +24,7 @@ housing_rf_model <- rand_forest() %>%
   set_engine('ranger') %>% 
   set_mode('regression')
 
-# show_engines('rand_forest')
+show_engines('rand_forest')
 
 # create a reusable workflow
 
