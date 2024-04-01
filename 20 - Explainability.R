@@ -1,7 +1,7 @@
 library(tidyverse)
 library(tidymodels)
-# install.packages('vip')
-# install.packages('DALEX')
+install.packages('vip')
+install.packages('DALEX')
 library(vip)
 library(DALEX)
 
@@ -90,7 +90,9 @@ final_xgb %>% collect_metrics()
 
 # Now see if you can interpret these plots:
 # Why do they look so different? 
+# Linear is forced to only look at linear relationships and xgboost can look at everything.
 # What does this tell you about why xgboost has better performance than linear regression?
+# xgboost has more flexibility in the way that it looks at features and relationships.
 pdp_lr <- model_profile(explainer_lr, variables = top_features)
 pdp_xgb <- model_profile(explainer_xgb, variables = top_features)
 plot(pdp_lr)
