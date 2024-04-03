@@ -43,19 +43,26 @@ housing_wkfl <- workflow() %>%
 # and that we're ready to deploy. Drumroll, please.....
 
 # What's first? (Or, I should say last?)
+final_model <- housing_wkfl %>% 
+  last_fit(split = housing_split)
+
+final_model %>% collect_metrics()
+final_model %>% collect_predictions()
 
 
 # Now we need to extract the trained workflow from the larger final fit result:
-
+extracted_workflow <- final_model %>% extract_workflow()
 
 # And create from that (trained) workflow a deployable model object. 
 # We'll use vetiver for this. Give it a name, too.
+deployable_model <- vetiver_model(extracted_workflow, "house_prices")
 
 
 # Now let's create a plumber-based API server for local testing
 # pr(), vetiver_api(), pr_run()
-
-
+pr() %>% 
+  vetiver_api(deployable_model) %>% 
+  pr_run(port = 8888)
 
 ###### Let's go check out our temporary API.
 ###### Copy the code below into a new session (Session >> New Session)
@@ -87,20 +94,21 @@ housing_wkfl <- workflow() %>%
 
 # Let's look at publishing with the pins package:
 # First, create a "pin_board"
+pin_board <- board_folder("/Users/carsonhalls/Documents/GitHub/is-555-00-in-class-activities-w24")
 
 
 # Write the (deployable) vetiver model object to the board:
-
+pin_board %>% vetiver_pin_write(v_model)
 
 # Boards can hold lots of different models (and versions). These can be listed 
 # and retreived. 
 pin_board %>% pin_list()
-pin_board %>% pin_versions('[model name]')
+pin_board %>% pin_versions('house_prices')
 
 
 # Moving from a pin board to a docker-based plumber API is as simple as preparing
 # the docker scripts:
-
+vetiver_prepare_docker(pin_board, "house_prices", path = "/Users/carsonhalls/Documents/GitHub/is-555-00-in-class-activities-w24")
 
 
 

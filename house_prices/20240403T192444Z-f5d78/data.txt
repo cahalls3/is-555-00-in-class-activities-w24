@@ -1,0 +1,17 @@
+file: house_prices.rds
+file_size: 3870704
+pin_hash: f5d78e660a5c95e3
+type: rds
+title: 'house_prices: a pinned list'
+description: A ranger regression modeling workflow
+tags: ~
+urls: ~
+created: 20240403T192444Z
+api_version: 1
+user:
+  required_pkgs:
+  - parsnip
+  - ranger
+  - recipes
+  - workflows
+  renv_lock: ~
